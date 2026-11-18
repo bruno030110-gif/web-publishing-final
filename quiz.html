@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="반도체 8대 공정 셀프 퀴즈로 학습 내용을 확인하세요">
+  <title>셀프 퀴즈 | Fab Tour</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/common.js" defer></script>
+  <script src="js/quiz.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__logo" href="index.html">Fab<span class="header__logo-accent">Tour</span></a>
+      <nav class="header__nav" id="site-nav" aria-label="주요 메뉴">
+        <a class="header__link" href="index.html">홈</a>
+        <a class="header__link" href="index.html#flow">공정 흐름</a>
+        <a class="header__link" href="index.html#catalog">공정 도감</a>
+        <a class="header__link header__link--active" href="quiz.html" aria-current="page">셀프 퀴즈</a>
+      </nav>
+      <div class="header__actions">
+        <button class="header__btn" type="button" id="theme-toggle" aria-pressed="false" aria-label="다크 모드 전환">🌙</button>
+        <button class="header__btn header__btn--menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="메뉴 열기">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="quiz">
+    <h1 class="quiz__title">셀프 퀴즈</h1>
+    <p class="section-desc">투어를 마쳤다면 6문제로 복습해 보세요. 모든 문항에 답해야 채점돼요.</p>
+
+    <!-- [U7] Form 유효성 검사: required + label for + 빈 값 경고 -->
+    <form class="quiz__form" id="quiz-form" novalidate>
+      <div class="quiz__field">
+        <label class="quiz__label" for="nickname">닉네임</label>
+        <input class="quiz__input" type="text" id="nickname" name="nickname" required maxlength="12" placeholder="예: 포토장인" aria-describedby="nickname-error">
+        <p class="quiz__error" id="nickname-error" aria-live="polite"></p>
+      </div>
+
+      <div id="quiz-questions">
+        <p class="status">문제를 불러오는 중…</p>
+      </div>
+
+      <div class="quiz__actions">
+        <button class="btn btn--primary" type="submit">채점하기</button>
+        <button class="btn btn--ghost" type="reset">다시 풀기</button>
+      </div>
+    </form>
+
+    <section class="result" id="quiz-result" aria-live="polite" hidden></section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__text">© <span class="js-year">2026</span> Fab Tour · 2026-2 웹퍼블리싱 기말 프로젝트</p>
+      <p class="footer__text">제작: 김무겸 (한양대학교 ERICA 전자공학부)</p>
+      <p class="footer__text footer__text--credit">사진: Wikimedia Commons(각 사진 하단에 저작자·라이선스 표기) · 영상: 삼성전자 반도체 뉴스룸, SK하이닉스 공식 YouTube</p>
+    </div>
+  </footer>
+</body>
+</html>

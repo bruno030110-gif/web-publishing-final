@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="웨이퍼가 칩이 되기까지, 반도체 8대 공정을 흐름도·공정 카드·셀프 퀴즈로 탐색하는 인터랙티브 도감">
+  <title>Fab Tour | 반도체 8대 공정 인터랙티브 도감</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- 이번 세션에서 인트로를 이미 봤으면 첫 화면부터 숨김(깜빡임 방지) -->
+  <script>try{if(sessionStorage.getItem('fabtour-intro-seen'))document.documentElement.classList.add('intro-seen');}catch(e){}</script>
+  <script src="js/common.js" defer></script>
+  <script src="js/intro.js" defer></script>
+  <script src="js/index.js" defer></script>
+</head>
+<body class="page-home">
+  <!-- 인트로: 웨이퍼 → 칩 점등 → 회로 발광 → 칩 확대 → 타이틀 → 화면 분리 -->
+  <div class="intro" id="intro">
+    <div class="intro__panel intro__panel--top"></div>
+    <div class="intro__panel intro__panel--bottom"></div>
+    <div class="intro__stage">
+      <svg class="intro__wafer" viewBox="0 0 400 400" focusable="false" aria-hidden="true">
+        <g class="intro__zoom">
+          <circle class="intro__ring" cx="200" cy="200" r="170"/>
+          <path class="intro__notch" d="M192 370 L200 360 L208 370"/>
+          <g id="intro-dies"></g>
+          <g class="intro__traces">
+            <path d="M200 200 H330 V120"/>
+            <path d="M200 200 V70 H260"/>
+            <path d="M200 200 H80 V280"/>
+            <path d="M200 200 V330 H130"/>
+            <path d="M200 200 L300 300 H340"/>
+            <path d="M200 200 L110 110 H60"/>
+          </g>
+          <rect class="intro__core" x="186" y="186" width="28" height="28" rx="3"/>
+        </g>
+      </svg>
+      <div class="intro__text">
+        <p class="intro__eyebrow">SEMICONDUCTOR 8 PROCESSES</p>
+        <p class="intro__title">FAB<span>TOUR</span></p>
+        <div class="intro__loader"><span class="intro__bar" id="intro-bar"></span></div>
+        <p class="intro__step" id="intro-step">클린룸 입장 중…</p>
+      </div>
+    </div>
+    <button class="intro__skip" type="button" id="intro-skip">건너뛰기 →</button>
+  </div>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+
+  <!-- [L4] sticky 헤더 / [L1] Flexbox 정렬 / [U3] 메뉴·다크모드 토글 -->
+  <header class="header">
+    <div class="header__inner">
+      <a class="header__logo" href="index.html">Fab<span class="header__logo-accent">Tour</span></a>
+      <nav class="header__nav" id="site-nav" aria-label="주요 메뉴">
+        <a class="header__link header__link--active" href="index.html" aria-current="page">홈</a>
+        <a class="header__link" href="index.html#flow">공정 흐름</a>
+        <a class="header__link" href="index.html#catalog">공정 도감</a>
+        <a class="header__link" href="quiz.html">셀프 퀴즈</a>
+      </nav>
+      <div class="header__actions">
+        <button class="header__btn" type="button" id="theme-toggle" aria-pressed="false" aria-label="다크 모드 전환">🌙</button>
+        <button class="header__btn header__btn--menu" type="button" id="menu-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="메뉴 열기">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero: [U5] 3초마다 문구 자동 전환 / [U6] 정지 버튼 -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Semiconductor 8 Processes</p>
+        <h1 class="hero__title" id="hero-title">웨이퍼가 칩이 되기까지,<br><span class="hero__accent">8단계 Fab 투어</span></h1>
+        <p class="hero__desc">모래에서 시작한 실리콘이 메모리 칩이 되기까지의 여정을 공정별로 따라가 보세요.</p>
+
+        <div class="ticker" aria-live="polite">
+          <span class="ticker__label">오늘의 공정 한 줄</span>
+          <p class="ticker__text" id="ticker-text">공정 데이터를 불러오는 중…</p>
+          <button class="ticker__btn" type="button" id="ticker-toggle" aria-label="자동 전환 일시정지">⏸</button>
+        </div>
+
+        <a class="btn btn--primary" href="process.html?id=1">투어 시작하기 →</a>
+      </div>
+      <!-- 홈 전용: 회로선을 따라 신호가 흐르는 칩 일러스트 -->
+      <div class="hero__visual" aria-hidden="true">
+        <img class="hero__chip" src="assets/img/hero-chip.svg" alt="" width="480" height="480">
+      </div>
+    </section>
+
+    <!-- 공정 이름이 흘러가는 마퀴 띠 -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>WAFER</span><span>OXIDATION</span><span>PHOTO</span><span>ETCH</span><span>DEPOSITION &amp; IMPLANT</span><span>METALLIZATION</span><span>EDS</span><span>PACKAGING</span>
+        <span>WAFER</span><span>OXIDATION</span><span>PHOTO</span><span>ETCH</span><span>DEPOSITION &amp; IMPLANT</span><span>METALLIZATION</span><span>EDS</span><span>PACKAGING</span>
+      </div>
+    </div>
+
+    <!-- [L1] Flexbox 공정 흐름 바 -->
+    <section class="flow" id="flow" aria-labelledby="flow-title">
+      <h2 class="section-title" id="flow-title" data-label="01 · PROCESS FLOW">공정 흐름</h2>
+      <p class="section-desc">단계를 누르면 해당 공정 페이지로 이동해요.</p>
+      <ol class="flow__list" id="flow-list"></ol>
+    </section>
+
+    <!-- [L2][L3] Grid 반응형 카드 / [D1~D5] fetch로 카드 생성 -->
+    <section class="catalog" id="catalog" aria-labelledby="catalog-title">
+      <h2 class="section-title" id="catalog-title" data-label="02 · PROCESS CATALOG">공정 도감</h2>
+      <div class="catalog__filters" role="group" aria-label="공정 분류 필터">
+        <button class="filter-btn filter-btn--active" type="button" data-stage="all" aria-pressed="true">전체</button>
+        <button class="filter-btn" type="button" data-stage="front" aria-pressed="false">전공정</button>
+        <button class="filter-btn" type="button" data-stage="back" aria-pressed="false">후공정</button>
+      </div>
+      <div class="catalog__grid" id="catalog-grid">
+        <p class="status">공정 카드를 불러오는 중…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__text">© <span class="js-year">2026</span> Fab Tour · 2026-2 웹퍼블리싱 기말 프로젝트</p>
+      <p class="footer__text">제작: 김무겸 (한양대학교 ERICA 전자공학부) · <button class="footer__link" type="button" id="intro-replay">인트로 다시 보기</button></p>
+      <p class="footer__text footer__text--credit">사진: Wikimedia Commons(각 사진 하단에 저작자·라이선스 표기) · 영상: 삼성전자 반도체 뉴스룸, SK하이닉스 공식 YouTube</p>
+    </div>
+  </footer>
+
+  <!-- [U4] setTimeout 환영 토스트 -->
+  <div class="toast" id="welcome-toast" role="status" aria-live="polite">👋 Fab Tour에 오신 걸 환영해요! 클린룸에 입장합니다.</div>
+</body>
+</html>
